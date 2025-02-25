@@ -12,25 +12,32 @@ const initialForm : UserInterface = {
   name : '',
   email : '',
   password : '',
+  uid : null,
+  photoURL : null,
 }
 
 export const RegisterPage = () => {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const { formState, onInputChange, isFormValid, formErrorMessage } = useFormAuth( initialForm , RegisterValidator );
+  const { formState, onInputChange, isFormValid, formErrorMessage, onResetForm } = useFormAuth( initialForm , RegisterValidator );
 
   const { name, email, password } = formState;
   const { name: nameError, email: emailError, password: passwordError } = formErrorMessage;
   
 
   const dispatch = useAppDispatch();
-  const handleSubmit = ( event : React.FormEvent<HTMLFormElement> ) => {
+  const handleSubmit = async ( event : React.FormEvent<HTMLFormElement> ) => {
     event.preventDefault();
     setFormSubmitted(true);
+    console.log('isformvalid', isFormValid());
     if ( !isFormValid() ) return;
-    console.log('handleSubmit', formState);
 
-    dispatch( startRegisterUserWithEmailPassword( formState ) );
+    const resp = await dispatch( startRegisterUserWithEmailPassword( formState ) );
+    if ( !resp ) return;
+
+    setFormSubmitted(false);
+    onResetForm();
+
   }
 
   return (

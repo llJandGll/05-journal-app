@@ -21,9 +21,9 @@ export const useFormAuth = ( initialForm : UserInterface , validatorForm : Error
 
     for ( const field in validatorForm ) {
       const fieldValue = field as keyof ErrorMessageAuth;
-      const [ validate, message ] = validatorForm[fieldValue];
+      const [ validate, message ] = validatorForm[fieldValue] ;
 
-      errorMessage[fieldValue] = validate( formState[fieldValue] ) ? null : message;
+      errorMessage[fieldValue] = validate( formState[fieldValue]  as string) ? null : message;
     }
     
     setFormErrorMessage( errorMessage );
@@ -31,6 +31,7 @@ export const useFormAuth = ( initialForm : UserInterface , validatorForm : Error
 
   const isFormValid = () => {
     for ( const field in formErrorMessage ) {
+      console.log('formErrorMessage', formErrorMessage);
       if ( formErrorMessage[field] !== null ) {
         return false;
       }

@@ -8,6 +8,7 @@ const initialState : AuthState = {
   user : null,
   errorMessage : null,
   successMessage : null,
+  isRegistering : false,
 }
 
 export const authSlice = createSlice({
@@ -19,12 +20,7 @@ export const authSlice = createSlice({
       state.user = null;
       state.errorMessage = null;
     },
-    onRegisterSuccess : ( state, action : PayloadAction<string> ) => {
-      state.status = 'not-authenticated';
-      state.user = null;
-      state.errorMessage = null;
-      state.successMessage = action.payload;
-    },
+   
     
     onLogin : ( state, action : PayloadAction<UserInterface> ) => {
       state.status = 'authenticated';
@@ -35,8 +31,15 @@ export const authSlice = createSlice({
       state.status = 'not-authenticated';
       state.user = null;
       state.errorMessage = action.payload;
+    },
+
+    startRegistering : ( state ) => {
+      state.isRegistering = true;
+    },
+    finishRegistering : ( state ) => {
+      state.isRegistering = false;
     }
   },
 })
 
-export const { onChecking, onLogin, onLogout, onRegisterSuccess } = authSlice.actions
+export const { onChecking, onLogin, onLogout, startRegistering, finishRegistering } = authSlice.actions

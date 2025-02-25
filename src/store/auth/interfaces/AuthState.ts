@@ -5,4 +5,5 @@ export interface AuthState {
   user : null | UserInterface
   errorMessage : string | null
   successMessage : string | null
+  isRegistering : boolean
 }
