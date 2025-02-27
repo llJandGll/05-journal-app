@@ -60,8 +60,9 @@ const googleProvider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
   try {
-    const { user } = await signInWithPopup(FirebaseAuth, googleProvider);
-    const { displayName, email, photoURL, uid } = user;
+    const resp = await signInWithPopup(FirebaseAuth, googleProvider);
+    console.log('resp', resp);
+    const { displayName, email, photoURL, uid } = resp.user;
     return {
       ok: true,
       message: 'Cargando informacion...',

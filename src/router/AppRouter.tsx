@@ -17,11 +17,9 @@ export const AppRouter = () => {
   useEffect(() => {
     if (isRegistering) return;
     
-    // Referencia para evitar efectos después de desmontar
     let isMounted = true;
     
     onAuthStateChanged(FirebaseAuth, (user) => {
-      // Evitar acciones si el componente se desmontó
       if (!isMounted) return;
       
       if (!user) {
@@ -29,18 +27,15 @@ export const AppRouter = () => {
         return;
       }
       
-      console.log('user', user);
       const { email, displayName, photoURL, uid } = user;
       if (!email) {
         dispatch(onLogout('email not found'));
         return;
       };
       
-      // Único lugar donde se actualiza el estado de autenticación
       dispatch(onLogin({ email, name: displayName, photoURL, uid, password: '' }));
     });
     
-    // Limpiar al desmontar
     return () => {
       isMounted = false;
     };

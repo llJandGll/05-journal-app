@@ -9,6 +9,8 @@ import { startGoogleSignIn, startLoginUserWithEmailPassword } from '../../store/
 import { useAppDispatch } from '../../hooks/useAppStore';
 import { LoginValidator } from '../validators/LoginValidator';
 
+import 'animate.css';
+
 const initialForm : UserInterface = {
   name : null,
   email : '',
@@ -41,7 +43,7 @@ export const LoginPage = () => {
 
   return (
     <AuthLayout title="Login">
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={ handleSubmit } className='animate__animated animate__headShake animate__delay-0.5s'>
           <Grid container>
             <Grid item xs={ 12 } sx={{ mt: 2 }}>
               <TextField 

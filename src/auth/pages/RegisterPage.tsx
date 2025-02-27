@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../hooks/useAppStore';
 import { startRegisterUserWithEmailPassword } from '../../store/auth/thunks';
 
+import 'animate.css';
+
 const initialForm : UserInterface = {
   name : '',
   email : '',
@@ -41,7 +43,7 @@ export const RegisterPage = () => {
 
   return (
     <AuthLayout title="Crear cuenta">
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={ handleSubmit } className='animate__animated animate__headShake animate__delay-0.5s'>
           <Grid container>
            
             <Grid item xs={ 12 } sx={{ mt: 2 }}>

@@ -5,7 +5,6 @@ import { useAppSelector } from '../../hooks/useAppStore';
 export const SideBar = ({ drawerWidth = 240 }) => {
 
     const { user } = useAppSelector(state => state.auth);
-    console.log('user', user);
     const { name } = user!;
   return (
     <Box
