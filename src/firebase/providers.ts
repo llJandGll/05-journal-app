@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { UserInterface } from "../interfaces";
 import { FirebaseAuth } from "./config";
 
@@ -55,6 +55,29 @@ export const loginUserWithEmailPassword = async ( { email, password } : UserInte
   }
 }
 
+
+const googleProvider = new GoogleAuthProvider();
+
+export const signInWithGoogle = async () => {
+  try {
+    const { user } = await signInWithPopup(FirebaseAuth, googleProvider);
+    const { displayName, email, photoURL, uid } = user;
+    return {
+      ok: true,
+      message: 'Cargando informacion...',
+      displayName,
+      email,
+      photoURL,
+      uid,
+    }
+  } catch (error: any) {
+    return {
+      ok: false,
+      errorMessage: error.message,
+      errorCode: error.code,
+    }
+  }
+}
 
 export const logoutAccount = async () => {
   await signOut(FirebaseAuth);

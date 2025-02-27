@@ -5,7 +5,7 @@ import { AuthLayout } from '../layout/AuthLayout';
 import { useFormAuth } from '../../hooks/useFormAuth';
 import { UserInterface } from '../../interfaces';
 import { useState } from 'react';
-import { startLoginUserWithEmailPassword } from '../../store/auth/thunks';
+import { startGoogleSignIn, startLoginUserWithEmailPassword } from '../../store/auth/thunks';
 import { useAppDispatch } from '../../hooks/useAppStore';
 import { LoginValidator } from '../validators/LoginValidator';
 
@@ -82,7 +82,11 @@ export const LoginPage = () => {
                 </Button>
               </Grid>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button variant='contained' fullWidth>
+                <Button 
+                  variant='contained' 
+                  fullWidth
+                  onClick={ () => dispatch( startGoogleSignIn() ) }
+                >
                   <Google />
                   <Typography sx={{ ml: 1 }}>Google</Typography>
                 </Button>

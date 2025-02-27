@@ -15,24 +15,35 @@ export const AppRouter = () => {
   const { status, isRegistering   } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if ( isRegistering ) return;
-    onAuthStateChanged( FirebaseAuth, ( user  ) => {
-      if ( !user) {
-        dispatch( onLogout('user not found or not authenticated'));
+    if (isRegistering) return;
+    
+    // Referencia para evitar efectos después de desmontar
+    let isMounted = true;
+    
+    onAuthStateChanged(FirebaseAuth, (user) => {
+      // Evitar acciones si el componente se desmontó
+      if (!isMounted) return;
+      
+      if (!user) {
+        dispatch(onLogout('user not found or not authenticated'));
         return;
       }
+      
       console.log('user', user);
-      const { email , displayName, photoURL, uid } = user;
-      if ( !email ) {
-        dispatch( onLogout('email not found'));
+      const { email, displayName, photoURL, uid } = user;
+      if (!email) {
+        dispatch(onLogout('email not found'));
         return;
       };
-      dispatch( onLogin({ email, name : displayName, photoURL, uid, password : '' }) );
+      
+      // Único lugar donde se actualiza el estado de autenticación
+      dispatch(onLogin({ email, name: displayName, photoURL, uid, password: '' }));
     });
     
-    // console.log(authListener());
-    // return () => authListener();
-    
+    // Limpiar al desmontar
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch, isRegistering]);
 
   if ( status === 'checking' || isRegistering ) return <CheckingAuth />;
