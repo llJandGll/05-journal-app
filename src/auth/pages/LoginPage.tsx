@@ -24,7 +24,6 @@ export const LoginPage = () => {
   const { email, password } = formState;
   const { email: emailError, password: passwordError } = formErrorMessage;
 
-  console.log('email, password', email, password);
   const dispatch = useAppDispatch();
 
   const handleSubmit = async ( event : React.FormEvent<HTMLFormElement> ) => {

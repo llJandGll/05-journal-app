@@ -31,7 +31,6 @@ export const useFormAuth = ( initialForm : UserInterface , validatorForm : Error
 
   const isFormValid = () => {
     for ( const field in formErrorMessage ) {
-      console.log('formErrorMessage', formErrorMessage);
       if ( formErrorMessage[field] !== null ) {
         return false;
       }

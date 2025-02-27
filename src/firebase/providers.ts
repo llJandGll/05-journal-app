@@ -8,7 +8,7 @@ export const registerUserWithEmailPassword = async ( { email, password, name } :
   if ( !email || !password || !name ) throw new Error('All fields are required');
 
   try {
-
+    // const originalUnuscribe = onAuthStateChanged(FirebaseAuth, () => {})
     await createUserWithEmailAndPassword( FirebaseAuth, email, password );
 
     if (!FirebaseAuth.currentUser) throw new Error('User not found');
@@ -16,6 +16,7 @@ export const registerUserWithEmailPassword = async ( { email, password, name } :
     
     await signOut(FirebaseAuth);
 
+    // originalUnuscribe();
 
     return {
       ok: true, 
@@ -39,12 +40,11 @@ export const loginUserWithEmailPassword = async ( { email, password } : UserInte
 
     const user = await signInWithEmailAndPassword( FirebaseAuth, email, password );
 
-    console.log('user', user);
     if ( !user ) throw new Error('User not found');
 
     return {
       ok : true,
-      message : 'Ingresando...',
+      message : 'Cargando informacion...',
     }
   } catch (error : any) {
     return {
@@ -53,6 +53,11 @@ export const loginUserWithEmailPassword = async ( { email, password } : UserInte
       errorCode : error.code,
     }
   }
+}
+
+
+export const logoutAccount = async () => {
+  await signOut(FirebaseAuth);
 }
 
 

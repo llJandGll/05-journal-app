@@ -1,7 +1,12 @@
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
 import { TurnedInNot } from '@mui/icons-material';
+import { useAppSelector } from '../../hooks/useAppStore';
 
 export const SideBar = ({ drawerWidth = 240 }) => {
+
+    const { user } = useAppSelector(state => state.auth);
+    console.log('user', user);
+    const { name } = user!;
   return (
     <Box
         component='nav'
@@ -17,7 +22,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
         >
             <Toolbar>
                 <Typography variant='h6' noWrap component='div'>
-                    Fernando Herrera
+                    { name }
                 </Typography>
             </Toolbar>
             <Divider />

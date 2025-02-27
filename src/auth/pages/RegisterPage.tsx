@@ -29,7 +29,6 @@ export const RegisterPage = () => {
   const handleSubmit = async ( event : React.FormEvent<HTMLFormElement> ) => {
     event.preventDefault();
     setFormSubmitted(true);
-    console.log('isformvalid', isFormValid());
     if ( !isFormValid() ) return;
 
     const resp = await dispatch( startRegisterUserWithEmailPassword( formState ) );

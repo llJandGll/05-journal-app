@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { loginUserWithEmailPassword, registerUserWithEmailPassword } from "../../firebase/providers";
+import { loginUserWithEmailPassword, logoutAccount, registerUserWithEmailPassword } from "../../firebase/providers";
 import { UserInterface } from "../../interfaces";
 import { AppDispatch } from "../store";
-import { finishRegistering, onChecking, onLogout, startRegistering } from "./authSlice";
+import { finishRegistering, onChecking, onLogin, onLogout, startRegistering } from "./authSlice";
 import { toast } from "sonner";
 
 
@@ -65,8 +65,9 @@ export const startLoginUserWithEmailPassword = (user: UserInterface) => {
         return;
       }
 
-      dispatch(finishRegistering());
       toast.success(message);
+      dispatch(finishRegistering());
+      dispatch(onLogin(user));
       return true;
     } catch (error: any) { 
         console.log('error', error);
@@ -75,4 +76,12 @@ export const startLoginUserWithEmailPassword = (user: UserInterface) => {
         return false;
     }
   } 
+}
+
+
+export const startLogout = () => {
+  return async ( dispatch : AppDispatch) => {
+    await logoutAccount();
+    dispatch(onLogout('Exit successfull'))
+  }
 }
