@@ -1,7 +1,7 @@
 import { ErrorMessageAuth } from "../interfaces";
 
 export const LoginValidator : ErrorMessageAuth = {
-  name : [ ( name : string ) => null , null ],
+  name : [ ( ) => null , null ],
   email : [ ( email : string ) => isValidEmail( email ) , 'El correo electrónico no es válido' ],
   password : [ ( password : string ) => password.length >= 6 , 'La contraseña debe tener al menos 6 caracteres' ],
   uid : [ ( ) => null , null ],
