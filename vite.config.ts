@@ -1,16 +1,22 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        }
+      }
+    }
   },
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src')
-    },
-  },
-  root: '.', // Asegura que Vite busque el index.html en la raíz
+  optimizeDeps: {
+    include: ['@emotion/react', '@emotion/styled', '@mui/material']
+  }
 })
