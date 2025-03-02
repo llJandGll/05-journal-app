@@ -3,15 +3,29 @@ import { AddOutlined } from '@mui/icons-material';
 
 import { JournalLayout } from '../layout/JournalLayout.tsx';
 import { NoteView, NothingSelectedView } from '../views';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppStore.ts';
+import { useMemo } from 'react';
+import { startNewNote } from '../../store/journal/thunks';
 
 export const JournalPage = () => {
+
+  const dispatch = useAppDispatch();
+  const { active, isSaving } = useAppSelector(state => state.journal);
+  
+  const onClickNewNote = () => {
+    dispatch(startNewNote());
+  }
+  
+  const checkingSaving = useMemo(() => isSaving, [isSaving]);
+  
+  // console.log('se dibuja el componente');
   return (
     <JournalLayout>
       
-      {/* <Typography>Sint id officia amet velit do aliqua aliqua est ea velit minim voluptate duis laboris. Esse esse consectetur ullamco excepteur ullamco amet. Mollit est nostrud nisi irure magna dolor eiusmod aliquip aliqua nostrud incididunt enim. Velit ipsum laborum Lorem anim laboris aute ullamco ipsum do adipisicing irure.</Typography> */}
 
-      <NothingSelectedView />
-      {/* <NoteView /> */}
+      {
+        (active) ? <NoteView /> : <NothingSelectedView />
+      }
 
 
       <IconButton
@@ -24,6 +38,8 @@ export const JournalPage = () => {
           right: 50,
           bottom: 50
         }}
+        onClick={onClickNewNote}
+        disabled={ checkingSaving }
       >
         <AddOutlined sx={{ fontSize: 30 }} />
       </IconButton>

@@ -9,10 +9,10 @@ import './styles.css';
 import { store } from './store';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>  
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <BrowserRouter>
         <JournalApp />
       </BrowserRouter>
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </Provider>
 )
